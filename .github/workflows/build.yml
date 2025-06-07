@@ -21,7 +21,10 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: |
+          cd src/api
+          npm install
+          npm install --save-dev @types/node
 
       - name: Build API
         run: |
