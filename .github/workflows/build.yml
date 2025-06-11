@@ -41,5 +41,12 @@ jobs:
           cd src/web
           npm run build
 
-      - name: Run tests
-        run: npm test
+      - name: Run API tests
+        run: |
+          cd src/api
+          npm test
+
+      - name: Run Web tests
+        run: |
+          cd src/web
+          npm test
