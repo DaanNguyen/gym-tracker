@@ -30,6 +30,7 @@ jobs:
         run: |
           cd src/web
           npm install
+          npm install --save-dev jsdom
 
       - name: Build API
         run: |
