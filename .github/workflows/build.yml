@@ -26,6 +26,11 @@ jobs:
           npm install
           npm install --save-dev @types/node
 
+      - name: Install Web Dependencies
+        run: |
+          cd src/web
+          npm install
+
       - name: Build API
         run: |
           cd src/api
