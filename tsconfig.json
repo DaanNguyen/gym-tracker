@@ -12,6 +12,7 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "types": ["node"],
+    "allowImportingTsExtensions": true,
     "paths": {
         "@api/*": ["./src/api/src/*"],
         "@shared/*": ["./src/shared/*"],
