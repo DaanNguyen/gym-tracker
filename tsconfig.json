@@ -12,11 +12,11 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "types": ["node"],
-    "allowImportingTsExtensions": true,
+    "baseUrl": ".", // <--- Belangrijk voor je aliassen
     "paths": {
-        "@api/*": ["./src/api/src/*"],
-        "@shared/*": ["./src/shared/*"],
-        "@web/*": ["./src/web/src/*"]
+      "@api/*": ["./src/api/src/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@web/*": ["./src/web/src/*"]
     }
   },
   "include": ["src", "tests"],
