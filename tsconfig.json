@@ -19,6 +19,6 @@
       "@web/*": ["./src/web/src/*"]
     }
   },
-  "include": ["src", "tests"],
+  "include": ["src", "tests", "src/web/src/dashboard/forms", "src/web/src/dashboard/navigation"],
   "exclude": ["node_modules", "dist"]
 }
