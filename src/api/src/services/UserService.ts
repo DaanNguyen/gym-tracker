@@ -3,16 +3,16 @@ import { User } from '../models/User';
 import { UserType } from '@api/types';
 
 export class UserService implements IUserService {
-  public async createUser(
-    userId: string,
-    username: string,
-    email: string,
-    password: string
-  ): Promise<boolean> {
-    const response = await new User(userId, username, email, password).create();
-    if (!response) throw new Error('Failed to create user');
-    return response;
-  }
+	public async createUser(
+		userId: string,
+		username: string,
+		email: string,
+		password: string
+	): Promise<boolean> {
+		const response = await new User(userId, username, email, password).create();
+		if (!response) throw new Error('Failed to create user');
+		return response;
+	}
 
 	// getUserById(userId: string): Promise<any> {
 	//   throw new Error("Method not implemented.");

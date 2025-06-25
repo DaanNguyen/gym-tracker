@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config';
 
 export const LoginForm = () => {
 	const [formData, setFormData] = useState({
@@ -11,6 +13,7 @@ export const LoginForm = () => {
 		password: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const navigate = useNavigate();
 
 	const validate = () => {
 		const newErrors = {
@@ -27,33 +30,38 @@ export const LoginForm = () => {
 			isValid = false;
 		}
 
-		if (!formData.password) {
-			newErrors.password = 'Password is required';
-			isValid = false;
-		} else if (formData.password.length < 6) {
-			newErrors.password = 'Password must be at least 6 characters';
-			isValid = false;
-		}
-
 		setErrors(newErrors);
 		return isValid;
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (validate()) {
-			setIsSubmitting(true);
-			// Simulate API call
-			setTimeout(() => {
-				console.log('Login data:', formData);
-				setIsSubmitting(false);
-			}, 1000);
+		if (!validate()) return;
+
+		setIsSubmitting(true);
+		try {
+			const response = await fetch(`${BASE_URL}/auth/login`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(formData),
+			});
+
+			if (!response.ok) throw new Error('Login failed');
+
+			navigate('/dashboard');
+		} catch (error) {
+			console.error('Login error:', error);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
+
 		// Clear error when user types
 		if (errors[name as keyof typeof errors]) {
 			setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -127,18 +135,6 @@ export const LoginForm = () => {
 			</div>
 
 			<div className="flex items-center justify-between">
-				<div className="flex items-center">
-					<input
-						id="remember-me"
-						name="remember-me"
-						type="checkbox"
-						className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-					/>
-					<label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
-						Remember me
-					</label>
-				</div>
-
 				<div className="text-sm">
 					<a href="#" className="font-medium hover:text-[#EAA22F]">
 						Forgot your password?

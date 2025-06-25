@@ -10,7 +10,7 @@ export class UserController {
 	private readonly _userService: IUserService = new UserService();
 
 	public async createUser(req: expressRequest, res: Response): Promise<void> {
-	  try {
+		try {
 			if (!req.body || !req.body.email || !req.body.password) {
 				res.status(400).json({
 					message: 'Email and password are required',
@@ -20,7 +20,7 @@ export class UserController {
 
 			const { username, email, password } = req.body as RegisterReqBody;
 			const uuid: string = uuidv4();
-      
+
 			const hashedPassword: string = await bcrypt.hash(password, 10);
 
 			const response = await this._userService.createUser(
