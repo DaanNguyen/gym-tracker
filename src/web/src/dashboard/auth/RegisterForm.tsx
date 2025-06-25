@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
+import { BASE_URL } from '../../config';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 export const RegisterForm = () => {
 	const [formData, setFormData] = useState({
@@ -15,6 +18,10 @@ export const RegisterForm = () => {
 		confirmPassword: '',
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const navigate = useNavigate();
+
+	const [showPassword, setShowPassword] = useState(false);
+	const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
 	const validate = () => {
 		const newErrors = {
@@ -61,21 +68,39 @@ export const RegisterForm = () => {
 		return isValid;
 	};
 
-	const handleSubmit = (e: React.FormEvent) => {
+	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
-		if (validate()) {
-			setIsSubmitting(true);
-			// Simulate API call
-			setTimeout(() => {
-				console.log('Registration data:', formData);
-				setIsSubmitting(false);
-			}, 1000);
+		if (!validate()) return;
+
+		setIsSubmitting(true);
+
+		const backendData = {
+			username: formData.name,
+			email: formData.email,
+			password: formData.password,
+		};
+
+		try {
+			await fetch(`${BASE_URL}/auth/register`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(backendData),
+			});
+
+			console.log('Registration successful!');
+
+			navigate('/dashboard');
+		} catch (error) {
+			console.error('Registration error:', error);
 		}
 	};
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
+
 		// Clear error when user types
 		if (errors[name as keyof typeof errors]) {
 			setErrors((prev) => ({ ...prev, [name]: '' }));
@@ -115,7 +140,6 @@ export const RegisterForm = () => {
 					</p>
 				)}
 			</div>
-
 			<div>
 				<label htmlFor="email" className="block text-sm font-medium text-gray-700">
 					Email address
@@ -147,7 +171,6 @@ export const RegisterForm = () => {
 					</p>
 				)}
 			</div>
-
 			<div>
 				<label htmlFor="password" className="block text-sm font-medium text-gray-700">
 					Password
@@ -156,21 +179,30 @@ export const RegisterForm = () => {
 					<input
 						id="password"
 						name="password"
-						type="password"
+						type={showPassword ? 'text' : 'password'}
 						value={formData.password}
 						onChange={handleChange}
-						className={`block w-full pr-10 ${errors.password ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} rounded-md shadow-sm focus:outline-none sm:text-sm`}
+						className={`block w-full pr-10 ${
+							errors.password
+								? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
+								: 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+						} rounded-md shadow-sm focus:outline-none sm:text-sm`}
 						aria-invalid={!!errors.password}
 						aria-describedby={errors.password ? 'password-error' : undefined}
 					/>
-					{errors.password && (
-						<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-							<ExclamationCircleIcon
-								className="h-5 w-5 text-red-500"
-								aria-hidden="true"
-							/>
-						</div>
-					)}
+					<div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+						<button
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="text-gray-500 hover:text-gray-700 focus:outline-none"
+						>
+							{showPassword ? (
+								<FaEyeSlash className="h-5 w-5" />
+							) : (
+								<FaEye className="h-5 w-5" />
+							)}
+						</button>
+					</div>
 				</div>
 				{errors.password && (
 					<p className="mt-2 text-sm text-red-600" id="password-error">
@@ -178,7 +210,6 @@ export const RegisterForm = () => {
 					</p>
 				)}
 			</div>
-
 			<div>
 				<label
 					htmlFor="confirmPassword"
@@ -190,23 +221,32 @@ export const RegisterForm = () => {
 					<input
 						id="confirmPassword"
 						name="confirmPassword"
-						type="password"
+						type={showConfirmPassword ? 'text' : 'password'}
 						value={formData.confirmPassword}
 						onChange={handleChange}
-						className={`block w-full pr-10 ${errors.confirmPassword ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} rounded-md shadow-sm focus:outline-none sm:text-sm`}
+						className={`block w-full pr-10 ${
+							errors.confirmPassword
+								? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
+								: 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+						} rounded-md shadow-sm focus:outline-none sm:text-sm`}
 						aria-invalid={!!errors.confirmPassword}
 						aria-describedby={
 							errors.confirmPassword ? 'confirmPassword-error' : undefined
 						}
 					/>
-					{errors.confirmPassword && (
-						<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-							<ExclamationCircleIcon
-								className="h-5 w-5 text-red-500"
-								aria-hidden="true"
-							/>
-						</div>
-					)}
+					<div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+						<button
+							type="button"
+							onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+							className="text-gray-500 hover:text-gray-700 focus:outline-none"
+						>
+							{showConfirmPassword ? (
+								<FaEyeSlash className="h-5 w-5" />
+							) : (
+								<FaEye className="h-5 w-5" />
+							)}
+						</button>
+					</div>
 				</div>
 				{errors.confirmPassword && (
 					<p className="mt-2 text-sm text-red-600" id="confirmPassword-error">
@@ -214,7 +254,6 @@ export const RegisterForm = () => {
 					</p>
 				)}
 			</div>
-
 			<div>
 				<button
 					type="submit"

@@ -1,12 +1,7 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { BASE_URL } from '../../config';
 import { useNavigate } from 'react-router-dom';
-
-type AuthContextType = {
-	token: string | null;
-	login: (email: string, password: string) => Promise<void>;
-	logout: () => void;
-};
+import { AuthContextType } from '../../types';
 
 const AuthContext = createContext<AuthContextType>(null!);
 

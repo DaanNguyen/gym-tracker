@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ExclamationCircleIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 import { BASE_URL } from '../../config';
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 export const LoginForm = () => {
 	const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ export const LoginForm = () => {
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
 	const navigate = useNavigate();
+	const [showPassword, setShowPassword] = useState(false);
 
 	const validate = () => {
 		const newErrors = {
@@ -40,15 +42,13 @@ export const LoginForm = () => {
 
 		setIsSubmitting(true);
 		try {
-			const response = await fetch(`${BASE_URL}/auth/login`, {
+			await fetch(`${BASE_URL}/auth/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(formData),
 			});
-
-			if (!response.ok) throw new Error('Login failed');
 
 			navigate('/dashboard');
 		} catch (error) {
@@ -110,22 +110,32 @@ export const LoginForm = () => {
 					<input
 						id="password"
 						name="password"
-						type="password"
+						type={showPassword ? 'text' : 'password'}
 						autoComplete="current-password"
 						value={formData.password}
 						onChange={handleChange}
-						className={`block w-full pr-10 ${errors.password ? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'} rounded-md shadow-sm focus:outline-none sm:text-sm`}
+						className={`block w-full pr-10 ${
+							errors.password
+								? 'border-red-300 text-red-900 placeholder-red-300 focus:ring-red-500 focus:border-red-500'
+								: 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+						} rounded-md shadow-sm focus:outline-none sm:text-sm`}
 						aria-invalid={!!errors.password}
 						aria-describedby={errors.password ? 'password-error' : undefined}
 					/>
-					{errors.password && (
-						<div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-							<ExclamationCircleIcon
-								className="h-5 w-5 text-red-500"
-								aria-hidden="true"
-							/>
-						</div>
-					)}
+					{/* Vervang het error icoon door de toggle knop */}
+					<div className="absolute inset-y-0 right-0 pr-3 flex items-center">
+						<button
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="text-gray-500 hover:text-gray-700 focus:outline-none"
+						>
+							{showPassword ? (
+								<FaEyeSlash className="h-5 w-5" />
+							) : (
+								<FaEye className="h-5 w-5" />
+							)}
+						</button>
+					</div>
 				</div>
 				{errors.password && (
 					<p className="mt-2 text-sm text-red-600" id="password-error">
