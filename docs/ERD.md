@@ -18,7 +18,7 @@
 
       Table WorkoutDay {
         id int [pk, increment]
-        workoutLogId int [ref: > WorkoutLog.id] 
+        workoutLogId int [ref: > WorkoutLog.id]
         date date
         title text
         notes text

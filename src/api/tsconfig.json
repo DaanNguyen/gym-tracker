@@ -1,7 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
-  "include": ["./src", "./tests", "./global.d.ts"],
-  "compilerOptions": {
-    "types": ["node"],
-  }
+	"extends": "../../tsconfig.json",
+	"include": ["./src", "./tests", "./global.d.ts"],
+	"compilerOptions": {
+		"types": ["node"]
+	}
 }

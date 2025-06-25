@@ -22,9 +22,9 @@ POST /auth/register
 
 ```json
 {
-  "name": "John Doe",
-  "email": "john@example.com",
-  "password": "securePassword123"
+	"name": "John Doe",
+	"email": "john@example.com",
+	"password": "securePassword123"
 }
 ```
 
@@ -42,8 +42,8 @@ POST /auth/login
 
 ```json
 {
-  "email": "john@example.com",
-  "password": "securePassword123"
+	"email": "john@example.com",
+	"password": "securePassword123"
 }
 ```
 
@@ -51,7 +51,7 @@ POST /auth/login
 
 ```json
 {
-  "token": "JWT_TOKEN_HERE"
+	"token": "JWT_TOKEN_HERE"
 }
 ```
 
@@ -67,9 +67,9 @@ POST /logs
 
 ```json
 {
-  "title": "Push Day",
-  "date": "2025-06-13",
-  "notes": "Felt strong today"
+	"title": "Push Day",
+	"date": "2025-06-13",
+	"notes": "Felt strong today"
 }
 ```
 
@@ -82,7 +82,6 @@ POST /logs
 ```http
 GET /logs
 ```
-
 
 **Response:** `200 OK`
 
@@ -98,9 +97,9 @@ POST /logs/:logId/days
 
 ```json
 {
-  "date": "2025-06-13",
-  "title": "Leg Day",
-  "notes": "Heavy squats"
+	"date": "2025-06-13",
+	"title": "Leg Day",
+	"notes": "Heavy squats"
 }
 ```
 
@@ -118,12 +117,12 @@ GET /exercises
 
 ```json
 [
-  {
-    "id": 1,
-    "name": "Bench Press",
-    "category": "Chest",
-    "description": "Barbell chest press"
-  }
+	{
+		"id": 1,
+		"name": "Bench Press",
+		"category": "Chest",
+		"description": "Barbell chest press"
+	}
 ]
 ```
 
@@ -137,9 +136,9 @@ POST /exercises
 
 ```json
 {
-  "name": "Deadlift",
-  "category": "Back",
-  "description": "Heavy compound lift"
+	"name": "Deadlift",
+	"category": "Back",
+	"description": "Heavy compound lift"
 }
 ```
 
@@ -155,7 +154,7 @@ POST /days/:dayId/exercises
 
 ```json
 {
-  "exerciseId": 1
+	"exerciseId": 1
 }
 ```
 
@@ -173,9 +172,9 @@ POST /workout-exercises/:exerciseInstanceId/sets
 
 ```json
 {
-  "setNumber": 1,
-  "reps": 8,
-  "weight": 60.0
+	"setNumber": 1,
+	"reps": 8,
+	"weight": 60.0
 }
 ```
 
@@ -189,8 +188,8 @@ PUT /sets/:setId
 
 ```json
 {
-  "reps": 10,
-  "weight": 65.0
+	"reps": 10,
+	"weight": 65.0
 }
 ```
 
@@ -210,4 +209,3 @@ PUT /sets/:setId
 - All dates use `YYYY-MM-DD` format.
 - All data returned is in JSON.
 - You should validate and sanitize user input on the client side too.
-

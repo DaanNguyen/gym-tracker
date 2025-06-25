@@ -1,5 +1,5 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 form input {
-  @apply p-2
+	@apply p-2;
 }

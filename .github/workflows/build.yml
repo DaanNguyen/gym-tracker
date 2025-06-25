@@ -1,53 +1,53 @@
 name: Build and Test
 
 on:
-  push:
-    branches:
-      - main
-      - dev
-  pull_request:
+    push:
+        branches:
+            - main
+            - dev
+    pull_request:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+    build:
+        runs-on: ubuntu-latest
 
-    steps:
-      - name: Check out repo code
-        uses: actions/checkout@v3
+        steps:
+            - name: Check out repo code
+              uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
 
-      - name: Install dependencies
-        run: |
-          cd src/api
-          npm install
-          npm install --save-dev @types/node
+            - name: Install dependencies
+              run: |
+                  cd src/api
+                  npm install
+                  npm install --save-dev @types/node
 
-      - name: Install Web Dependencies
-        run: |
-          cd src/web
-          npm install
-          npm install --save-dev jsdom
+            - name: Install Web Dependencies
+              run: |
+                  cd src/web
+                  npm install
+                  npm install --save-dev jsdom
 
-      - name: Build API
-        run: |
-          cd src/api
-          npm run build
+            - name: Build API
+              run: |
+                  cd src/api
+                  npm run build
 
-      - name: Build Web
-        run: |
-          cd src/web
-          npm run build
+            - name: Build Web
+              run: |
+                  cd src/web
+                  npm run build
 
-      - name: Run API tests
-        run: |
-          cd src/api
-          npm test
+            - name: Run API tests
+              run: |
+                  cd src/api
+                  npm test
 
-      - name: Run Web tests
-        run: |
-          cd src/web
-          npm test
+            - name: Run Web tests
+              run: |
+                  cd src/web
+                  npm test

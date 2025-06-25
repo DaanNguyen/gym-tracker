@@ -1,24 +1,24 @@
 {
-  "compilerOptions": {
-    "target": "ES2017",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "strict": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "noEmit": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "types": ["node"],
-    "baseUrl": ".", // <--- Belangrijk voor je aliassen
-    "paths": {
-      "@api/*": ["./src/api/src/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@web/*": ["./src/web/src/*"]
-    }
-  },
-  "include": ["src", "tests", "src/web/src/dashboard/forms", "src/web/src/dashboard/navigation"],
-  "exclude": ["node_modules", "dist"]
+	"compilerOptions": {
+		"target": "ES2017",
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"strict": true,
+		"sourceMap": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"noEmit": false,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noImplicitReturns": true,
+		"types": ["node"],
+		"baseUrl": ".", // <--- Belangrijk voor je aliassen
+		"paths": {
+			"@api/*": ["./src/api/src/*"],
+			"@shared/*": ["./src/shared/*"],
+			"@web/*": ["./src/web/src/*"]
+		}
+	},
+	"include": ["src", "tests", "src/web/src/dashboard/forms", "src/web/src/dashboard/navigation"],
+	"exclude": ["node_modules", "dist"]
 }
